@@ -15,7 +15,7 @@ def main():
 # デフォルト
 def bench1():
     base_file = r"data\001.csv"
-    df = pd.read_csv(base_file)
+    df = pd.read_csv(base_file, engine="c")
 
 
 if __name__ == '__main__':

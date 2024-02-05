@@ -26,7 +26,7 @@ def bench6(csv_path_ary):
 
 # 並列化読み込み(C engine)
 def bench6_multi_C(csv_path):
-    return pd.read_csv(csv_path)
+    return pd.read_csv(csv_path, engine="c")
 
 
 if __name__ == '__main__':
