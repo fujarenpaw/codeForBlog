@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\hoge\Documents\GitHub\codeForBlog\code\tools\grpc\wincpp\src\greeter_client.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hoge\Documents\GitHub\codeForBlog\code\tools\grpc\wincpp\src\helloworld.grpc.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\hoge\Documents\GitHub\codeForBlog\code\tools\grpc\wincpp\src\helloworld.pb.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\hoge\Documents\GitHub\codeForBlog\code\tools\grpc\wincpp\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{F1651B93-E398-3FF0-90F6-D74147E31366}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
