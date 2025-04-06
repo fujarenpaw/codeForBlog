@@ -59,4 +59,55 @@ document.addEventListener('DOMContentLoaded', () => {
         x: 0,
         y: 0
     });
+
+    // ランダムな色を生成する関数
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    // ノードのクリックイベントを設定
+    renderer.on('clickNode', (event) => {
+        const node = event.node;
+        // 左クリックで色を変更
+        graph.setNodeAttribute(node, 'color', getRandomColor());
+        renderer.refresh();
+    });
+
+    // ノードの右クリックイベントを設定
+    renderer.on('rightClickNode', (event) => {
+        const node = event.node;
+        // 右クリックでサイズを変更
+        const currentSize = graph.getNodeAttribute(node, 'size');
+        const newSize = currentSize === 10 ? 20 : 10;
+        graph.setNodeAttribute(node, 'size', newSize);
+        renderer.refresh();
+    });
+
+    // マウスホイールでズーム
+    renderer.getMouseCaptor().on('wheel', (event) => {
+        const factor = event.delta > 0 ? 1.1 : 0.9;
+        camera.animatedZoom({ duration: 200, factor });
+    });
+
+    // ドラッグでパン
+    renderer.getMouseCaptor().on('mousedown', (event) => {
+        if (event.originalEvent.button === 0) { // 左クリック
+            renderer.getMouseCaptor().on('mousemove', (event) => {
+                camera.animate({
+                    x: camera.x - event.deltaX / camera.ratio,
+                    y: camera.y - event.deltaY / camera.ratio
+                }, { duration: 0 });
+            });
+        }
+    });
+
+    // マウスアップでドラッグ終了
+    renderer.getMouseCaptor().on('mouseup', () => {
+        renderer.getMouseCaptor().off('mousemove');
+    });
 }); 
