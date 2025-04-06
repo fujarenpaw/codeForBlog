@@ -1,12 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>D3.js with Electron</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-    <script src="node_modules/d3/dist/d3.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .control-panel {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        .instruction {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .color-box {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feature-list li {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="control-panel">
+            <h2>操作説明</h2>
+            <ul class="feature-list">
+                <li>🖱️ ドラッグ: 円を移動</li>
+                <li>🖱️ ホイール: 円のサイズ変更</li>
+                <li>🖱️ ダブルクリック: 透明度切り替え</li>
+                <li>🖱️ 右クリック: 色変更</li>
+                <li>🖱️ マウスオーバー: 円の強調表示</li>
+            </ul>
+            
+            <div class="color-palette">
+                <div class="color-box" style="background-color: steelblue;"></div>
+                <div class="color-box" style="background-color: red;"></div>
+                <div class="color-box" style="background-color: green;"></div>
+                <div class="color-box" style="background-color: purple;"></div>
+                <div class="color-box" style="background-color: orange;"></div>
+            </div>
+
+            <div class="status">
+                <h3>現在の状態</h3>
+                <p>円の数: <span id="circleCount">5</span></p>
+                <p>接続線の数: <span id="connectionCount">10</span></p>
+            </div>
+        </div>
+        <div id="visualization"></div>
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
