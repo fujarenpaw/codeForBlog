@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'">
+    <title>Sigma.js Graph Example</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="graph-container"></div>
+    <script>
+        window.graphology = require('graphology');
+        window.sigma = require('sigma');
+    </script>
+    <script src="./renderer.js"></script>
+</body>
+</html>
