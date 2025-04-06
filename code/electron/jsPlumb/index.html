@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>jsPlumb Exlample</title>
+    <style>
+        .window {
+            width: 150px;
+            height: 100px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            position: absolute;
+            background: white;
+            cursor: move;
+        }
+        .window.selected {
+            border: 2px solid #2196F3;
+            background: #E3F2FD;
+        }
+        #window1 { left: 50px; top: 50px; }
+        #window2 { left: 300px; top: 50px; }
+        #window3 { left: 175px; top: 200px; }
+    </style>
+</head>
+<body>
+    <div id="window1" class="window">Window 1</div>
+    <div id="window2" class="window">Window 2</div>
+    <div id="window3" class="window">Window 3</div>
+
+    <script src="./node_modules/jsplumb/dist/js/jsplumb.min.js"></script>
+    <script>
+        let selectedWindow = null;
+        let connections = [];
+
+        jsPlumb.ready(function() {
+            // 基本的な接続設定
+            jsPlumb.defaults = {
+                connector: "Bezier",
+                paintStyle: { stroke: "#456", strokeWidth: 2 },
+                endpoint: "Dot",
+                anchors: ["Right", "Left"]
+            };
+
+            // 初期接続の設定
+            setupInitialConnections();
+
+            // ドラッグ可能に設定
+            jsPlumb.draggable("window1");
+            jsPlumb.draggable("window2");
+            jsPlumb.draggable("window3");
+
+            // ウィンドウのクリックイベントを設定
+            document.querySelectorAll('.window').forEach(window => {
+                // 左クリックで選択
+                window.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    selectWindow(this);
+                });
+
+                // 右クリックで接続
+                window.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    if (selectedWindow && selectedWindow !== this) {
+                        toggleConnection(selectedWindow, this);
+                    }
+                });
+            });
+
+            // ドキュメント全体のクリックで選択解除
+            document.addEventListener('click', function() {
+                if (selectedWindow) {
+                    selectedWindow.classList.remove('selected');
+                    selectedWindow = null;
+                }
+            });
+        });
+
+        function setupInitialConnections() {
+            connections.push(jsPlumb.connect({
+                source: "window1",
+                target: "window2"
+            }));
+            connections.push(jsPlumb.connect({
+                source: "window2",
+                target: "window3"
+            }));
+            connections.push(jsPlumb.connect({
+                source: "window1",
+                target: "window3"
+            }));
+        }
+
+        function selectWindow(window) {
+            if (selectedWindow) {
+                selectedWindow.classList.remove('selected');
+            }
+            selectedWindow = window;
+            window.classList.add('selected');
+        }
+
+        function toggleConnection(source, target) {
+            const existingConnection = connections.find(conn => 
+                (conn.sourceId === source.id && conn.targetId === target.id) ||
+                (conn.sourceId === target.id && conn.targetId === source.id)
+            );
+
+            if (existingConnection) {
+                jsPlumb.deleteConnection(existingConnection);
+                connections = connections.filter(conn => conn !== existingConnection);
+            } else {
+                connections.push(jsPlumb.connect({
+                    source: source.id,
+                    target: target.id
+                }));
+            }
+        }
+    </script>
+</body>
+</html>
